@@ -88,6 +88,7 @@ def display():
             
         l = l.replace('x|&|', 'xxx|')
         l = l.replace('x|&', 'xx|')
+        l = l.replace('&|', ' |')
         l = l.replace('||', 'x|')
         print(f"{l}")
    
