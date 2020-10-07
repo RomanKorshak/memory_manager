@@ -110,6 +110,6 @@ def splitRow(row):
         print(len(line))
         result.append(line)
         start = end + 1
-        end += len_row + 1;
+        end += len_row + 1
 
     return result
