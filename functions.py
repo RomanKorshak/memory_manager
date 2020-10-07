@@ -61,30 +61,55 @@ def display():
     while counter < mem_size:
         for node in memory:
             length_block_without_id =  size * node[1] - len(str(node[0]))
-            template = f"{node[0]}{'x' * length_block_without_id}|"
+            template = f"{node[0]}{'x' * (length_block_without_id)}|"
 
             if counter == node[0]:
                 row += template
                 counter += node[1]
             else:
                 diff = node[0] - counter
-                row += f"{' ' * diff * size}|{template}"
+                row += f"{' ' * (diff * size)}|{template}"
                 
                 counter += (diff + node[1]) 
 
         if counter < mem_size:
-            row += f"{' ' * (mem_size - counter + 3) * size}"
+            row += f"{' ' * (mem_size - counter + 2) * size}"
             counter += (mem_size - counter)
             
-    row = row.replace('||', '|')
+    row += "&"
     
+    for line in splitRow(row):
+        l = f"|{line}|"
 
+        if '||' in l[:2]:
+            l = l.lstrip('|')
+            l = f"{line} |"
+            l = l.replace('x |', 'xx|')
+            
+        l = l.replace('x|&|', 'xxx|')
+        l = l.replace('x|&', 'xx|')
+        l = l.replace('||', 'x|')
+        print(f"{l}")
+   
+    # print()
+    # print(len(row))
+
+    # for i, value in enumerate(row):
+    #     print(f"{i} -- {value}")
+   
+    
+        
+def splitRow(row):
     len_row = len(str(mem_size)) * max_row
     start = 0
     end = len_row
-    for _ in range(math.ceil(mem_size / max_row)):
-        line = f"|{row[start:end]}|".replace('||', '|')
-        print(line)
-        start = end + 1
-        end += len_row + 1
 
+    result = []
+    for _ in range(math.ceil(mem_size / max_row)):
+        line = f"{row[start:end]}"
+        print(len(line))
+        result.append(line)
+        start = end + 1
+        end += len_row + 1;
+
+    return result
